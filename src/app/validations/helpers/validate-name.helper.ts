@@ -1,11 +1,11 @@
-import { BadRequestException } from "../../errors/bad-request-exception.error"
+import { BadRequestException } from "../../errors/base/bad-request-exception.error"
 
 const MIN_NAME_LENGTH = 3
 const PORTUGUESE_PATTERN = /[a-zA-ZáÁéÉíÍóÓúÚãÃõÕâÂêÊôÔàÀèÈìÌòÒùÙüçÇ ']/gm
 
 export function validateName(name: string) {
     if (!name) throw new BadRequestException('NameCannotBeNull')
-    if (typeof name !== 'string') throw new BadRequestException('NameMustBeString')
+    if (typeof name !== 'string') throw new BadRequestException('NameMustBeAString')
 
     const notAllowedLetters = name.replace(PORTUGUESE_PATTERN, '')
 
