@@ -3,7 +3,9 @@ import dotenv from 'dotenv'
 
 dotenv.config()
 
-const port = parseInt(<string>process.env.PORT) | 3000
+const port = parseInt(<string>process.env.PORT) || 3000
+
+console.log(port)
 
 const app = express()
 
