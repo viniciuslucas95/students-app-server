@@ -5,8 +5,6 @@ dotenv.config()
 
 const port = parseInt(<string>process.env.PORT) || 3000
 
-console.log(port)
-
 const app = express()
 
 app.listen(port, () => {
