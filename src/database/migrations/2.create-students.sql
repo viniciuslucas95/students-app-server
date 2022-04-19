@@ -1,6 +1,7 @@
 CREATE TABLE students (
 	id UUID DEFAULT uuid_generate_v4(),
 	name VARCHAR NOT NULL,
+	age SMALLINT NOT NULL,
 	created_at TIMESTAMP DEFAULT NOW(),
 	updated_at TIMESTAMP DEFAULT NOW(),
 	PRIMARY KEY(id)

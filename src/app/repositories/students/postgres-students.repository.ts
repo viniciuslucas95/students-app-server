@@ -4,14 +4,14 @@ import { ICreateStudentDto, IGetStudentDto, IUpdateStudentDto } from "../../dto/
 import { IStudentsRepository } from "./students-interface.repository";
 
 export class PostgresStudentsRepository implements IStudentsRepository {
-    async createAsync(dto: ICreateStudentDto): Promise<IIdDto> {
-        const result = await client.query<IIdDto>('INSERT INTO students(name) VALUES($1) RETURNING id;', [dto.name])
+    async createAsync({ name, age }: ICreateStudentDto): Promise<IIdDto> {
+        const result = await client.query<IIdDto>('INSERT INTO students(name, age) VALUES($1, $2) RETURNING id;', [name, age])
 
         return result.rows[0]
     }
 
-    async updateAsync(id: string, dto: IUpdateStudentDto): Promise<void> {
-        await client.query('UPDATE students SET name = $1 WHERE id = $2;', [dto.name, id])
+    async updateAsync(id: string, { name, age }: IUpdateStudentDto): Promise<void> {
+        await client.query('UPDATE students SET name = $1, age = $2 WHERE id = $3;', [name, age, id])
     }
 
     async deleteAsync(id: string): Promise<void> {
@@ -19,13 +19,13 @@ export class PostgresStudentsRepository implements IStudentsRepository {
     }
 
     async getAllAsync(): Promise<IGetStudentDto[]> {
-        const result = await client.query<IGetStudentDto>('SELECT id, name FROM students;')
+        const result = await client.query<IGetStudentDto>('SELECT id, name, age FROM students;')
 
         return result.rows
     }
 
     async getOneAsync(id: string): Promise<Omit<IGetStudentDto, 'id'>> {
-        const result = await client.query<Omit<IGetStudentDto, 'id'>>('SELECT name FROM students WHERE id = $1;', [id])
+        const result = await client.query<Omit<IGetStudentDto, 'id'>>('SELECT name, age FROM students WHERE id = $1;', [id])
 
         return result.rows[0]
     }
