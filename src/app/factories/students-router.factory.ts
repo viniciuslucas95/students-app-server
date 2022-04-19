@@ -1,10 +1,12 @@
 import { Router } from "express";
 import { StudentsController } from "../controllers/students.controller";
+import { PostgresStudentsRepository } from "../repositories/students/postgres-students.repository";
 import { StudentsService } from "../services/students/students.service";
 
-export class StudentsControllerFactory {
+export class StudentsRouterFactory {
     static create() {
-        const service = new StudentsService()
+        const repository = new PostgresStudentsRepository()
+        const service = new StudentsService(repository)
         const controller = new StudentsController(service, Router())
         return controller.router
     }

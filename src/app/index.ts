@@ -1,6 +1,6 @@
 import express, { json } from 'express'
 import dotenv from 'dotenv'
-import { StudentsControllerFactory } from './factories/students-controller.factory'
+import { StudentsControllerFactory } from './factories/students-router.factory'
 import { errorsHandler } from './middlewares/errors-handler.middleware'
 
 dotenv.config()
