@@ -1,6 +1,6 @@
 import express, { json } from 'express'
 import dotenv from 'dotenv'
-import { studentsRouter } from './controllers/students.controller'
+import { StudentsControllerFactory } from './factories/StudentsControllerFactory'
 
 dotenv.config()
 
@@ -9,7 +9,7 @@ const port = parseInt(<string>process.env.PORT) || 3000
 const app = express()
 
 app.use(json())
-app.use('/students', studentsRouter)
+app.use('/students', StudentsControllerFactory.create())
 
 app.listen(port, () => {
     if (process.env.NODE_ENV != 'dev') return

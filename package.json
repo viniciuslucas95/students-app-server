@@ -2,10 +2,10 @@
   "name": "students-app-server",
   "version": "1.0.0",
   "description": "",
-  "main": "dist/index.js",
+  "main": "dist/app/index.js",
   "scripts": {
-    "start": "NODE_ENV=prod node dist/index.js",
-    "dev": "NODE_ENV=dev ts-node-dev --respawn --transpile-only src/index.ts",
+    "start": "NODE_ENV=prod node dist/app/index.js",
+    "dev": "NODE_ENV=dev ts-node-dev --respawn --transpile-only src/app/index.ts",
     "build": "tsc --build",
     "clean": "tsc --build --clean"
   },
