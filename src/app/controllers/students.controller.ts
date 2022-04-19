@@ -1,9 +1,11 @@
 import { Request, Response, Router } from 'express'
+import { IStudentsService } from '../services/students/students.interface'
+import { createStudentValidation } from '../validations/create-student.validation'
 
 export class StudentsController {
     router
 
-    constructor() {
+    constructor(private studentsService: IStudentsService) {
         this.router = Router()
 
         this.setupGetAll()
@@ -19,7 +21,7 @@ export class StudentsController {
     }
 
     private setupPost() {
-        this.router.post('/', async (req: Request, res: Response) => {
+        this.router.post('/', createStudentValidation, async (req: Request, res: Response) => {
             res.send({
                 post: 'ok'
             })

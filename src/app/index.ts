@@ -1,6 +1,7 @@
 import express, { json } from 'express'
 import dotenv from 'dotenv'
-import { StudentsControllerFactory } from './factories/StudentsControllerFactory'
+import { StudentsControllerFactory } from './factories/students-controller.factory'
+import { errorsHandler } from './middlewares/errors-handler.middleware'
 
 dotenv.config()
 
@@ -10,6 +11,7 @@ const app = express()
 
 app.use(json())
 app.use('/students', StudentsControllerFactory.create())
+app.use(errorsHandler)
 
 app.listen(port, () => {
     if (process.env.NODE_ENV != 'dev') return
