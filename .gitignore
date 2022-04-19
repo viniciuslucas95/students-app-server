@@ -1,5 +1,7 @@
 # Environment
 .env
+tmp/database/*
+!tmp/database/.gitkeep
 
 # Compiled output
 /dist

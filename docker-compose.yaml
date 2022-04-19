@@ -1,0 +1,22 @@
+services:
+  students_app_postgres:
+    image: postgres
+    container_name: students_app_postgres
+    restart: always
+    environment:
+      POSTGRES_PASSWORD: admin
+    volumes:
+      - ./tmp/database/postgres:/var/lib/postgresql/data
+    ports:
+      - 5432:5432
+  students_app_pgadmin:
+    image: dpage/pgadmin4
+    container_name: students_app_pgadmin
+    restart: always
+    ports:
+      - 8080:80
+    environment:
+      PGADMIN_DEFAULT_EMAIL: pgadmin@gmail.com
+      PGADMIN_DEFAULT_PASSWORD: pgadmin
+    depends_on:
+      - students_app_postgres
