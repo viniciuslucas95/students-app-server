@@ -5,8 +5,35 @@ import { createStudentValidation } from '../validations/create-student.validatio
 
 export class StudentsController {
     constructor(private studentsService: IStudentsService, public router: Router) {
-        this.setupGetAll()
         this.setupPost()
+        this.setupPatch()
+        this.setupDelete()
+        this.setupGetAll()
+        this.setupGetOne()
+    }
+
+    private setupPost() {
+        this.router.post('/', createStudentValidation, async (req: Request, res: Response) => {
+            const result = await this.studentsService.createAsync(req.body)
+
+            res.status(STATUS_CODE.CREATED).json(result)
+        })
+    }
+
+    private setupPatch() {
+        this.router.patch('/:id', async (req: Request, res: Response) => {
+            await this.studentsService.updateAsync(req.params.id, req.body)
+
+            res.sendStatus(STATUS_CODE.NO_CONTENT)
+        })
+    }
+
+    private setupDelete() {
+        this.router.delete('/:id', async (req: Request, res: Response) => {
+            await this.studentsService.deleteAsync(req.params.id)
+
+            res.sendStatus(STATUS_CODE.NO_CONTENT)
+        })
     }
 
     private setupGetAll() {
@@ -17,11 +44,11 @@ export class StudentsController {
         })
     }
 
-    private setupPost() {
-        this.router.post('/', createStudentValidation, async (req: Request, res: Response) => {
-            const result = await this.studentsService.createAsync(req.body)
+    private setupGetOne() {
+        this.router.get('/:id', async (req: Request, res: Response) => {
+            const result = await this.studentsService.getOneAsync(req.params.id)
 
-            res.status(STATUS_CODE.CREATED).json(result)
+            res.json(result)
         })
     }
 }
