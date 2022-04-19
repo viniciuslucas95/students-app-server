@@ -7,4 +7,5 @@ export interface IStudentsService {
     deleteAsync(id: string): Promise<void>
     getAllAsync(): Promise<IGetStudentDto[]>
     getOneAsync(id: string): Promise<Omit<IGetStudentDto, 'id'>>
+    checkUserExistenceAsync(id: string): Promise<void>
 }

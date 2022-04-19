@@ -11,7 +11,7 @@ export class PostgresStudentsRepository implements IStudentsRepository {
     }
 
     async updateAsync(id: string, { name, age }: IUpdateStudentDto): Promise<void> {
-        await client.query('UPDATE students SET name = $1, age = $2 WHERE id = $3;', [name, age, id])
+        await client.query('UPDATE students SET name = $1, age = $2, updated_at = NOW() WHERE id = $3;', [name, age, id])
     }
 
     async deleteAsync(id: string): Promise<void> {
@@ -24,9 +24,15 @@ export class PostgresStudentsRepository implements IStudentsRepository {
         return result.rows
     }
 
-    async getOneAsync(id: string): Promise<Omit<IGetStudentDto, 'id'>> {
+    async getOneAsync(id: string): Promise<Omit<IGetStudentDto, 'id'> | undefined> {
         const result = await client.query<Omit<IGetStudentDto, 'id'>>('SELECT name, age FROM students WHERE id = $1;', [id])
 
         return result.rows[0]
+    }
+
+    async checkExistenceAsync(id: string): Promise<boolean> {
+        const result = await client.query('SELECT id FROM students WHERE id = $1;', [id])
+
+        return result.rows[0] ? true : false
     }
 }
