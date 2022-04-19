@@ -1,4 +1,4 @@
-import express from 'express'
+import express, { json } from 'express'
 import dotenv from 'dotenv'
 import { studentsRouter } from './controllers/students.controller'
 
@@ -8,6 +8,7 @@ const port = parseInt(<string>process.env.PORT) || 3000
 
 const app = express()
 
+app.use(json())
 app.use('/students', studentsRouter)
 
 app.listen(port, () => {
