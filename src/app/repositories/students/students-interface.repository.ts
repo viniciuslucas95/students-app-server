@@ -6,5 +6,5 @@ export interface IStudentsRepository {
     updateAsync(id: string, dto: IUpdateStudentDto): Promise<void>
     deleteAsync(id: string): Promise<void>
     getAllAsync(): Promise<IGetStudentDto[]>
-    getOneAsync(id: string): Promise<IGetStudentDto>
+    getOneAsync(id: string): Promise<Omit<IGetStudentDto, 'id'>>
 }

@@ -24,8 +24,8 @@ export class PostgresStudentsRepository implements IStudentsRepository {
         return result.rows
     }
 
-    async getOneAsync(id: string): Promise<IGetStudentDto> {
-        const result = await client.query<IGetStudentDto>('SELECT name FROM students WHERE id = $1;', [id])
+    async getOneAsync(id: string): Promise<Omit<IGetStudentDto, 'id'>> {
+        const result = await client.query<Omit<IGetStudentDto, 'id'>>('SELECT name FROM students WHERE id = $1;', [id])
 
         return result.rows[0]
     }

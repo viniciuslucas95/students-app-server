@@ -22,7 +22,7 @@ export class StudentsService implements IStudentsService {
         return this.studentsRepository.getAllAsync()
     }
 
-    async getOneAsync(id: string): Promise<IGetStudentDto> {
+    async getOneAsync(id: string): Promise<Omit<IGetStudentDto, 'id'>> {
         return this.studentsRepository.getOneAsync(id)
     }
 }
