@@ -6,7 +6,8 @@ services:
     environment:
       POSTGRES_PASSWORD: admin
     volumes:
-      - ./tmp/database/postgres:/var/lib/postgresql/data
+      - ./tmp/database:/var/lib/postgresql/data
+      - ./scripts:/docker-entrypoint-initdb.d
     ports:
       - 5432:5432
   students_app_pgadmin:
