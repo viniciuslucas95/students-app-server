@@ -1,6 +1,6 @@
 # Environment
 .env
-tmp/database/*
+tmp/database
 
 # Compiled output
 /dist
