@@ -5,7 +5,7 @@ import { errorsHandler } from './middlewares/errors-handler.middleware'
 
 dotenv.config()
 
-const port = parseInt(<string>process.env.PORT) || 3000
+const port = parseInt(<string>process.env.PORT) || 3001
 
 const app = express()
 
