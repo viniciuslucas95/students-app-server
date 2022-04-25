@@ -1,8 +1,6 @@
 import { NextFunction, Request, Response, Router } from 'express'
 import { STATUS_CODE } from '../constants/status-code.constant'
 import { IStudentsService } from '../services/students/students-interface.service'
-import { createStudentValidation } from '../validations/create-student.validation'
-import { updateStudentValidation } from '../validations/update-student.validation'
 
 export class StudentsController {
     constructor(private studentsService: IStudentsService, public router: Router) {
@@ -14,7 +12,7 @@ export class StudentsController {
     }
 
     private setupPost() {
-        this.router.post('/', createStudentValidation, async (req: Request, res: Response, next: NextFunction) => {
+        this.router.post('/', async (req: Request, res: Response, next: NextFunction) => {
             try {
                 const result = await this.studentsService.createAsync(req.body)
                 res.status(STATUS_CODE.CREATED).json(result)
@@ -25,7 +23,7 @@ export class StudentsController {
     }
 
     private setupPatch() {
-        this.router.patch('/:id', updateStudentValidation, async (req: Request, res: Response, next: NextFunction) => {
+        this.router.patch('/:id', async (req: Request, res: Response, next: NextFunction) => {
             try {
                 await this.studentsService.updateAsync(req.params.id, req.body)
                 res.sendStatus(STATUS_CODE.NO_CONTENT)

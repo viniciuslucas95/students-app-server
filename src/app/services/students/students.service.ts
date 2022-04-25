@@ -1,21 +1,25 @@
-import { IIdDto } from "../../dto/common.dto";
+import { IGetIdDto } from "../../dto/common.dto";
 import { ICreateStudentDto, IGetStudentDto, IUpdateStudentDto } from "../../dto/students.dto";
 import { UserNotFoundException } from "../../errors/user-not-found-exception.error";
 import { IStudentsRepository } from "../../repositories/students/students-interface.repository";
-import { IStudentsService } from "./students-interface.service";
+import { IGetAllStudents, IStudentsService } from "./students-interface.service";
 
 export class StudentsService implements IStudentsService {
     constructor(private studentsRepository: IStudentsRepository) { }
 
-    async createAsync(dto: ICreateStudentDto): Promise<IIdDto> {
+    async createAsync(dto: ICreateStudentDto): Promise<IGetIdDto> {
         return this.studentsRepository.createAsync(dto)
     }
 
     async updateAsync(id: string, dto: IUpdateStudentDto): Promise<void> {
         const user = await this.getOneAsync(id)
 
-        if (!dto.age) dto.age = user.age
         if (!dto.name) dto.name = user.name
+        if (!dto.rg) dto.rg = user.rg
+        if (!dto.cpf) dto.cpf = user.cpf
+        if (!dto.age) dto.age = user.age
+        if (!dto.class) dto.class = user.class
+        if (!dto.address) dto.address = user.address
 
         return this.studentsRepository.updateAsync(id, dto)
     }
@@ -26,8 +30,11 @@ export class StudentsService implements IStudentsService {
         return this.studentsRepository.deleteAsync(id)
     }
 
-    async getAllAsync(): Promise<IGetStudentDto[]> {
-        return this.studentsRepository.getAllAsync()
+    async getAllAsync(): Promise<IGetAllStudents> {
+        const students = await this.studentsRepository.getAllAsync()
+        const { results } = await this.studentsRepository.countAll()
+
+        return { students, results }
     }
 
     async getOneAsync(id: string): Promise<Omit<IGetStudentDto, 'id'>> {

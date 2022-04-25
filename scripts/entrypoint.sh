@@ -17,7 +17,11 @@ psql -U 'postgres' <<- EOSQL
 	CREATE TABLE students (
 	id UUID DEFAULT uuid_generate_v4(),
 	name VARCHAR NOT NULL,
+	rg INTEGER NOT NULL UNIQUE,
+	cpf BIGINT NOT NULL UNIQUE,
 	age SMALLINT NOT NULL,
+	class VARCHAR NOT NULL,
+	address VARCHAR NOT NULL,
 	created_at TIMESTAMP DEFAULT NOW(),
 	updated_at TIMESTAMP DEFAULT NOW(),
 	PRIMARY KEY(id)
