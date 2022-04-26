@@ -1,7 +1,8 @@
 import { client } from "../../../configs/postgres.config";
-import { CountReturnDto, CreationReturnDto } from "../../dto/common.dto";
+import { CountReturnDto, CreationReturnDto, QueryDto } from "../../dto/common.dto";
 import { CreateStudentDto, GetStudentDto, UpdateStudentDto } from "../../dto/students.dto";
 import { getDtoValues } from "../helpers/get-dto-values.helper";
+import { getQuery } from "../helpers/get-query.helper";
 import { StudentsRepository } from "./students.repository";
 
 export class PostgresStudentsRepository implements StudentsRepository {
@@ -19,8 +20,9 @@ export class PostgresStudentsRepository implements StudentsRepository {
         await client.query('DELETE FROM students WHERE id = $1;', [id])
     }
 
-    async find(): Promise<GetStudentDto[]> {
-        const result = await client.query<GetStudentDto>("SELECT id, name, rg, cpf, class, address, TO_CHAR(birthdate,'YYYY-MM-DD') birthdate FROM students;")
+    async find(query: QueryDto): Promise<GetStudentDto[]> {
+        const { string, array } = getQuery(query)
+        const result = await client.query<GetStudentDto>(`SELECT id, name, rg, cpf, class, address, TO_CHAR(birthdate,'YYYY-MM-DD') birthdate FROM students${string};`, array)
 
         return result.rows
     }

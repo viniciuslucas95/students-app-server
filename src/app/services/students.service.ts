@@ -1,4 +1,4 @@
-import { CreationReturnDto } from "../dto/common.dto";
+import { CreationReturnDto, QueryDto } from "../dto/common.dto";
 import { CreateStudentDto, GetStudentDto, UpdateStudentDto } from "../dto/students.dto";
 import { StudentsRepository } from "../repositories/students/students.repository";
 import { CpfConflictException } from "./errors/cpf-already-exists.error";
@@ -42,8 +42,8 @@ export class StudentsService {
         return this.repository.delete(id)
     }
 
-    async findAll(): Promise<GetAllStudentsDto> {
-        const students = await this.repository.find()
+    async findAll(query: QueryDto): Promise<GetAllStudentsDto> {
+        const students = await this.repository.find(query)
         const { results } = await this.repository.count()
 
         return { students, results }

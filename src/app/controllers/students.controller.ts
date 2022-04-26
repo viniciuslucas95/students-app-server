@@ -2,6 +2,7 @@ import { NextFunction, Request, Response, Router } from 'express'
 import { STATUS_CODE } from '../errors/constants/status-code.constant'
 import { StudentsService } from '../services/students.service'
 import { idValidation } from '../validations/id.validation'
+import { queryValidation } from '../validations/query.validation'
 import { studentsCreationValidation } from '../validations/students/students-creation.validation'
 import { studentsUpdateValidation } from '../validations/students/students-update.validation'
 
@@ -48,9 +49,9 @@ export class StudentsController {
     }
 
     private setupGetAll() {
-        this.router.get('/', async (req: Request, res: Response, next: NextFunction) => {
+        this.router.get('/', queryValidation, async (req: Request, res: Response, next: NextFunction) => {
             try {
-                const result = await this.service.findAll()
+                const result = await this.service.findAll(req.body)
                 res.json(result)
             } catch (err) {
                 next(err)
