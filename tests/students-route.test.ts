@@ -1,13 +1,13 @@
 import axios from 'axios'
 import faker from '@faker-js/faker'
-import { ICreateStudentDto, IUpdateStudentDto } from '../src/app/dto/students.dto'
+import { CreateStudentDto, UpdateStudentDto } from '../src/app/dto/students.dto'
 
 const baseUrl = 'http://localhost:3000/students'
 
 describe("students route should", () => {
     describe('succeed on', () => {
         test('creating a new student', async () => {
-            const student: ICreateStudentDto = {
+            const student: CreateStudentDto = {
                 name: faker.name.findName(),
                 age: faker.datatype.number({
                     min: 0, max: 120
@@ -21,7 +21,7 @@ describe("students route should", () => {
         })
 
         test('creating a new student and updating it', async () => {
-            const student: ICreateStudentDto = {
+            const student: CreateStudentDto = {
                 name: faker.name.findName(),
                 age: faker.datatype.number({
                     min: 0, max: 120
@@ -30,7 +30,7 @@ describe("students route should", () => {
 
             const creationResult = await axios.post(baseUrl, student)
 
-            const update: IUpdateStudentDto = {
+            const update: UpdateStudentDto = {
                 name: faker.name.findName()
             }
 
@@ -40,7 +40,7 @@ describe("students route should", () => {
         })
 
         test('creating a new student and deleting it', async () => {
-            const student: ICreateStudentDto = {
+            const student: CreateStudentDto = {
                 name: faker.name.findName(),
                 age: faker.datatype.number({
                     min: 0, max: 120
@@ -55,7 +55,7 @@ describe("students route should", () => {
         })
 
         test('creating a new student and getting it', async () => {
-            const student: ICreateStudentDto = {
+            const student: CreateStudentDto = {
                 name: faker.name.findName(),
                 age: faker.datatype.number({
                     min: 0, max: 120

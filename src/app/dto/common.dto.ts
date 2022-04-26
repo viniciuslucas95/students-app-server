@@ -1,7 +1,7 @@
-export interface IGetIdDto {
+export interface CreationReturnDto {
     id: string
 }
 
-export interface ICountResultsDto {
+export interface CountReturnDto {
     results: number
 }

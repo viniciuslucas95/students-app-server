@@ -1,7 +1,7 @@
 import { Router } from "express";
 import { StudentsController } from "../controllers/students.controller";
 import { PostgresStudentsRepository } from "../repositories/students/postgres-students.repository";
-import { StudentsService } from "../services/students/students.service";
+import { StudentsService } from "../services/students.service";
 
 export class StudentsRouterFactory {
     static create() {

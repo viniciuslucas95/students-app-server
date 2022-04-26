@@ -1,20 +1,20 @@
-export interface ICreateStudentDto {
+export interface CreateStudentDto {
     name: string
     rg: number
     cpf: number
-    age: number
     class: string
     address: string
+    birthdate: Date
 }
 
-export interface IGetStudentDto {
+export interface GetStudentDto {
     id: string
     name: string
     rg: number
     cpf: number
-    age: number
     class: string
     address: string
+    birthdate: Date
 }
 
-export interface IUpdateStudentDto extends Partial<ICreateStudentDto> { }
+export interface UpdateStudentDto extends Partial<CreateStudentDto> { }
