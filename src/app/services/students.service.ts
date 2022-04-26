@@ -1,9 +1,9 @@
 import { CreationReturnDto } from "../dto/common.dto";
 import { CreateStudentDto, GetStudentDto, UpdateStudentDto } from "../dto/students.dto";
-import { CpfConflictException } from "../errors/cpf-already-exists.error";
-import { RgConflictException } from "../errors/rg-already-exists.error";
-import { UserNotFoundException } from "../errors/user-not-found-exception.error";
 import { StudentsRepository } from "../repositories/students/students.repository";
+import { CpfConflictException } from "./errors/cpf-already-exists.error";
+import { RgConflictException } from "./errors/rg-already-exists.error";
+import { StudentNotFoundException } from "./errors/student-not-found-exception.error";
 
 export interface GetAllStudentsDto {
     students: GetStudentDto[],
@@ -33,22 +33,11 @@ export class StudentsService {
             else await this.checkExistenceByCpf(dto.cpf)
         }
 
-        const keys = Object.keys(user)
-        const newDto = {}
-
-        for (let i = 0; i < keys.length; i++) {
-            const key = keys[i]
-
-            if (typeof (dto as any)[key] === 'undefined') (newDto as any)[key] = null;
-
-            (newDto as any)[key] = (dto as any)[key]
-        }
-
-        return this.repository.update(id, newDto)
+        return this.repository.update(id, dto)
     }
 
     async delete(id: string): Promise<void> {
-        if (!await this.repository.checkExistence(id)) throw new UserNotFoundException()
+        if (!await this.repository.checkExistence(id)) throw new StudentNotFoundException()
 
         return this.repository.delete(id)
     }
@@ -63,7 +52,7 @@ export class StudentsService {
     async findOne(id: string): Promise<Omit<GetStudentDto, 'id'>> {
         const user = await this.repository.findOne(id)
 
-        if (!user) throw new UserNotFoundException()
+        if (!user) throw new StudentNotFoundException()
 
         return user
     }

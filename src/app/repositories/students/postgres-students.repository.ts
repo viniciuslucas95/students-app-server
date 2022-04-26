@@ -20,13 +20,13 @@ export class PostgresStudentsRepository implements StudentsRepository {
     }
 
     async find(): Promise<GetStudentDto[]> {
-        const result = await client.query<GetStudentDto>('SELECT id, name, rg, cpf, class, address, birthdate FROM students;')
+        const result = await client.query<GetStudentDto>("SELECT id, name, rg, cpf, class, address, TO_CHAR(birthdate,'YYYY-MM-DD') birthdate FROM students;")
 
         return result.rows
     }
 
     async findOne(id: string): Promise<Omit<GetStudentDto, 'id'> | undefined> {
-        const result = await client.query<Omit<GetStudentDto, 'id'>>('SELECT name, rg, cpf, class, address, birthdate FROM students WHERE id = $1 LIMIT 1;', [id])
+        const result = await client.query<Omit<GetStudentDto, 'id'>>("SELECT name, rg, cpf, class, address, TO_CHAR(birthdate, 'YYYY-MM-DD') birthdate FROM students WHERE id = $1 LIMIT 1;", [id])
 
         return result.rows[0]
     }

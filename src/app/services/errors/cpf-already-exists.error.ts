@@ -1,4 +1,5 @@
-import { ConflictException } from "./base/conflict-exception.error";
+import { ConflictException } from "../../errors/base/conflict-exception.error";
+
 
 export class CpfConflictException extends ConflictException {
     constructor() {
